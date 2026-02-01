@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="App.Controls.StationControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:App.Controls"
+    xmlns:app="using:App"
+    xmlns:models="using:App.Models"
+    xmlns:converters="using:App.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:services="using:App.ViewModels" d:DataContext="{d:DesignInstance Type=services:StationViewModel}"
+    mc:Ignorable="d">
+
+	<UserControl.Resources>
+		<converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+	</UserControl.Resources>
+
+	<Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+			BorderBrush="{x:Bind BorderColor, Mode=OneWay}"
+			BorderThickness="2"
+			CornerRadius="8"
+			Padding="16"
+			MinWidth="800">
+
+		<!-- Main Grid with two columns: Left for existing content, Right for Machine States -->
+		<Grid ColumnSpacing="16" RowSpacing="16">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="Auto"/>
+			</Grid.ColumnDefinitions>
+
+			<!-- Station Header -->
+			<Grid Grid.Row="0"
+                  Grid.Column="0"
+                  Grid.ColumnSpan="2">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="Auto"/>
+				</Grid.ColumnDefinitions>
+
+				<TextBlock Grid.Column="0" Text="{x:Bind StationTitle, Mode=OneWay}"
+                           Style="{StaticResource SubtitleTextBlockStyle}"
+                           VerticalAlignment="Center"/>
+				<Image Grid.Column="1" Source="{x:Bind Image, Mode=OneWay}" Height="100"/>
+			</Grid>
+
+			<StackPanel Grid.Row="1"
+                        Grid.Column="0"
+                        Spacing="12">
+				<Border BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+					    BorderThickness="1"
+					    CornerRadius="8"
+					    Padding="12"
+					    Background="{ThemeResource LayerFillColorDefaultBrush}">
+					<StackPanel Spacing="8">
+						<!-- Carriers Management -->
+						<Grid ColumnSpacing="8">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+							</Grid.ColumnDefinitions>
+
+							<TextBox x:Name="CarrierTextBox"
+									 PlaceholderText="e.g. CARRIER005"
+									 Grid.Column="0"/>
+							<Button Content="Add"
+									Click="AddCarrier_Click"
+									Height="32"
+									Grid.Column="1"/>
+							<Button Content="Select All"
+									Click="{x:Bind ViewModel.SelectAllCarriers}"
+									Height="32"
+									Grid.Column="2"/>
+							<Button Content="Deselect All"
+									Click="{x:Bind ViewModel.DeselectAllCarriers}"
+									Height="32"
+									Grid.Column="3"/>
+						</Grid>
+
+						<ListView x:Name="CarriersListView"
+					      MinHeight="100"
+					      MaxHeight="180"
+					      SelectionMode="None"
+					      BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+					      BorderThickness="1"
+					      CornerRadius="8"
+					      ItemsSource="{x:Bind ViewModel.Carriers, Mode=OneWay}">
+							<ListView.ItemTemplate>
+								<DataTemplate x:DataType="models:CarrierItem">
+									<Grid ColumnSpacing="6">
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="30"/>
+											<ColumnDefinition Width="*"/>
+											<ColumnDefinition Width="Auto"/>
+										</Grid.ColumnDefinitions>
+
+										<CheckBox IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
+									      Grid.Column="0"
+									      VerticalAlignment="Center"/>
+
+										<TextBox Text="{x:Bind Name, Mode=TwoWay}"
+									     Grid.Column="1"
+									     VerticalAlignment="Center"/>
+
+										<Button Click="RemoveCarrier_Click"
+									    Tag="{x:Bind Name}"
+									    Width="32"
+									    Height="32"
+									    Padding="4"
+									    Grid.Column="2"
+									    ToolTipService.ToolTip="Remove carrier">
+											<FontIcon Glyph="&#xE74D;" Foreground="#C42B1C" FontSize="12"/>
+										</Button>
+									</Grid>
+								</DataTemplate>
+							</ListView.ItemTemplate>
+						</ListView>
+
+						<!-- Entry/Exit Buttons -->
+						<Grid ColumnSpacing="8">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="*"/>
+							</Grid.ColumnDefinitions>
+
+							<Button Grid.Column="0"
+									Content="Entry"
+									Click="Entry_Click"
+									Background="#2D7D2D"
+									BorderBrush="#1F5F1F"
+									HorizontalAlignment="Stretch">
+								<Button.Resources>
+									<SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#3D9D3D"/>
+									<SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#1D6D1D"/>
+								</Button.Resources>
+							</Button>
+
+							<Button Grid.Column="1"
+									Content="Exit"
+									Click="Exit_Click"
+									Background="#C42B1C"
+									BorderBrush="#A02010"
+									HorizontalAlignment="Stretch">
+								<Button.Resources>
+									<SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#E43B2C"/>
+									<SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#A01B0C"/>
+								</Button.Resources>
+							</Button>
+						</Grid>
+					</StackPanel>
+				</Border>
+
+				<!-- Telemetry Configuration Section -->
+				<Border BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+					    BorderThickness="1"
+					    CornerRadius="8"
+					    Padding="12"
+					    Background="{ThemeResource LayerFillColorDefaultBrush}">
+					<StackPanel Spacing="8">
+						<TextBlock Text="Telemetry Configuration" FontWeight="SemiBold"/>
+
+						<ContentPresenter x:Name="TelemetryContent" Content="{x:Bind TelemetrySection, Mode=OneWay}"/>
+
+						<!-- Telemetry Buttons -->
+						<StackPanel Orientation="Horizontal" Spacing="8">
+							<Button x:Name="StartTelemetryButton"
+								    Content="Start Telemetry"
+								    Click="StartTelemetry_Click"
+								    IsEnabled="{x:Bind ViewModel.CanStartTelemetry, Mode=OneWay}"
+								    Style="{StaticResource AccentButtonStyle}"/>
+
+							<Button x:Name="StopTelemetryButton"
+								    Content="Stop Telemetry"
+								    Click="StopTelemetry_Click"
+								    IsEnabled="{x:Bind ViewModel.CanStopTelemetry, Mode=OneWay}"/>
+						</StackPanel>
+					</StackPanel>
+				</Border>
+
+				<!-- Attributes Section (Optional) -->
+				<Border x:Name="AttributesBorder"
+					    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+					    BorderThickness="1"
+					    CornerRadius="8"
+					    Padding="12"
+					    Background="{ThemeResource LayerFillColorDefaultBrush}"
+					    Visibility="{x:Bind HasAttributes, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+					<StackPanel Spacing="8">
+						<TextBlock Text="Attributes" FontWeight="SemiBold"/>
+
+						<Grid ColumnSpacing="8">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="Auto"/>
+							</Grid.ColumnDefinitions>
+
+							<ContentPresenter Grid.Column="0"
+                                              x:Name="AttributesContent"
+                                              Content="{x:Bind AttributesSection, Mode=OneWay}"/>
+
+							<Button Grid.Column="1"
+                                    Content="Send"
+                                    Click="SendAttributes_Click"
+                                    HorizontalAlignment="Left"/>
+						</Grid>
+					</StackPanel>
+				</Border>
+			</StackPanel>
+
+			<!-- Right Column: OEE Level 3 Machine States -->
+			<Border Grid.Row="1"
+                    Grid.Column="1"
+                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1"
+                    CornerRadius="8"
+                    Padding="12"
+                    Background="{ThemeResource LayerFillColorDefaultBrush}"
+                    MinWidth="200">
+				<StackPanel Spacing="8">
+					<TextBlock Text="OEE Level 3 States" 
+                               FontWeight="SemiBold"
+                               HorizontalAlignment="Center"
+                               TextAlignment="Center"/>
+
+					<!-- Machine State Buttons -->
+					<StackPanel Spacing="6">
+						<!-- Production State -->
+						<Button Content="Production"
+                                Click="SendMachineState_Click"
+                                Tag="Production"
+                                HorizontalAlignment="Stretch"
+                                Background="#2D7D2D"
+                                BorderBrush="#1F5F1F">
+							<Button.Resources>
+								<SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#3D9D3D"/>
+								<SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#1D6D1D"/>
+							</Button.Resources>
+						</Button>
+
+						<!-- Standby State -->
+						<Button Content="Standby"
+                                Click="SendMachineState_Click"
+                                Tag="Standby"
+                                HorizontalAlignment="Stretch"
+                                Background="#7D7D2D"
+                                BorderBrush="#5F5F1F">
+							<Button.Resources>
+								<SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#9D9D3D"/>
+								<SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#6D6D1D"/>
+							</Button.Resources>
+						</Button>
+
+						<!-- Unplanned Downtime State -->
+						<Button Content="Unplanned Downtime"
+                                Click="SendMachineState_Click"
+                                Tag="UnplannedDowntime"
+                                HorizontalAlignment="Stretch"
+                                Background="#C42B1C"
+                                BorderBrush="#A02010">
+							<Button.Resources>
+								<SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#E43B2C"/>
+								<SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#A01B0C"/>
+							</Button.Resources>
+						</Button>
+
+						<!-- Planned Downtime State -->
+						<Button Content="Planned Downtime"
+                                Click="SendMachineState_Click"
+                                Tag="PlannedDowntime"
+                                HorizontalAlignment="Stretch"
+                                Background="#D83B01"
+                                BorderBrush="#B82B00">
+							<Button.Resources>
+								<SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#F84B11"/>
+								<SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#C82B00"/>
+							</Button.Resources>
+						</Button>
+
+						<!-- Setup/Changeover State -->
+						<Button Content="Setup/Changeover"
+                                Click="SendMachineState_Click"
+                                Tag="Setup"
+                                HorizontalAlignment="Stretch"
+                                Background="#CA5010"
+                                BorderBrush="#AA4000">
+							<Button.Resources>
+								<SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#EA6020"/>
+								<SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#AA4000"/>
+							</Button.Resources>
+						</Button>
+
+						<!-- Maintenance State -->
+						<Button Content="Maintenance"
+                                Click="SendMachineState_Click"
+                                Tag="Maintenance"
+                                HorizontalAlignment="Stretch"
+                                Background="#8E562E"
+                                BorderBrush="#6E461E">
+							<Button.Resources>
+								<SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#AE663E"/>
+								<SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#6E461E"/>
+							</Button.Resources>
+						</Button>
+
+						<!-- Material Shortage State -->
+						<Button Content="Material Shortage"
+                                Click="SendMachineState_Click"
+                                Tag="MaterialShortage"
+                                HorizontalAlignment="Stretch"
+                                Background="#F7630C"
+                                BorderBrush="#D75300">
+							<Button.Resources>
+								<SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#FF731C"/>
+								<SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#D75300"/>
+							</Button.Resources>
+						</Button>
+
+						<!-- Operator Break State -->
+						<Button Content="Operator Break"
+                                Click="SendMachineState_Click"
+                                Tag="OperatorBreak"
+                                HorizontalAlignment="Stretch"
+                                Background="#FFB900"
+                                BorderBrush="#E0A300">
+							<Button.Resources>
+								<SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#FFC920"/>
+								<SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#E0A300"/>
+							</Button.Resources>
+						</Button>
+					</StackPanel>
+				</StackPanel>
+			</Border>
+		</Grid>
+	</Border>
+</UserControl>

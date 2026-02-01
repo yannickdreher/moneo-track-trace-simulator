@@ -1,0 +1,14 @@
+root = true
+
+# XAML Files
+[*.xaml]
+indent_style = tab
+indent_size = 4
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+# XAML Specific
+xaml_new_line_before_elements = multiline
+xaml_preserve_attribute_spacing = false
+xaml_space_before_self_closing = true
+xaml_wrap_attributes_per_line = true
