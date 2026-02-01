@@ -10,7 +10,7 @@
   <Identity
     Name="b1af4622-ffd9-4f8c-8ad9-4fe833ffa2af"
     Publisher="CN=dedrehya"
-    Version="1.0.1.0" />
+    Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="b1af4622-ffd9-4f8c-8ad9-4fe833ffa2af" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

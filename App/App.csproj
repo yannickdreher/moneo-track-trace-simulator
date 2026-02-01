@@ -15,11 +15,11 @@
 	<GenerateAppInstallerFile>True</GenerateAppInstallerFile>
 	<AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
 	<AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
-	<AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+	<AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
 	<AppxPackageDir>C:\Users\dedrehya\source\repos\moneo-track-trace-simulator\Packages\</AppxPackageDir>
 	<GenerateTestArtifacts>True</GenerateTestArtifacts>
 	<AppxBundle>Never</AppxBundle>
-	<AppInstallerUri>https://github.com/yannickdreher/moneo-track-trace-simulator/tree/master/Release/win-x64</AppInstallerUri>
+	<AppInstallerUri>https://github.com/yannickdreher/moneo-track-trace-simulator/tree/master/Packages/win-x64</AppInstallerUri>
 	<HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
   </PropertyGroup>
 

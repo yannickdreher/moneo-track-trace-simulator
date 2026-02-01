@@ -157,7 +157,6 @@ PublishScripts/
 # NuGet Packages
 *.nupkg
 *.snupkg
-**/[Pp]ackages/*
 !**/[Pp]ackages/build/
 *.nuget.props
 *.nuget.targets
