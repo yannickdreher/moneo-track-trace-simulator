@@ -19,7 +19,7 @@
 	<AppxPackageDir>C:\Users\dedrehya\source\repos\moneo-track-trace-simulator\Packages\</AppxPackageDir>
 	<GenerateTestArtifacts>True</GenerateTestArtifacts>
 	<AppxBundle>Never</AppxBundle>
-	<AppInstallerUri>https://dremaxx.de/test</AppInstallerUri>
+	<AppInstallerUri>https://github.com/yannickdreher/moneo-track-trace-simulator/tree/master/Release/win-x64</AppInstallerUri>
 	<HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
   </PropertyGroup>
 
