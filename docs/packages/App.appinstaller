@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AppInstaller
+	Uri="https://yannickdreher.github.io/moneo-track-trace-simulator/packages/App.appinstaller"
+	Version="1.0.0.0" xmlns="http://schemas.microsoft.com/appx/appinstaller/2017/2">
+	<MainBundle
+		Name="b1af4622-ffd9-4f8c-8ad9-4fe833ffa2af"
+		Version="1.0.0.0"
+		Publisher="CN=dedrehya"
+		Uri="https://yannickdreher.github.io/moneo-track-trace-simulator/packages/App_1.0.0.0_Test/App_1.0.0.0_x64_arm64.msixbundle" />
+	<Dependencies>
+		<Package
+			Name="Microsoft.WindowsAppRuntime.1.8"
+			Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
+			ProcessorArchitecture="x64"
+			Uri="https://yannickdreher.github.io/moneo-track-trace-simulator/packages/App_1.0.0.0_Test/Dependencies/x64/Microsoft.WindowsAppRuntime.1.8.msix"
+			Version="8000.731.1532.0" />
+		<Package
+			Name="Microsoft.WindowsAppRuntime.1.8"
+			Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
+			ProcessorArchitecture="arm64"
+			Uri="https://yannickdreher.github.io/moneo-track-trace-simulator/packages/App_1.0.0.0_Test/Dependencies/arm64/Microsoft.WindowsAppRuntime.1.8.msix"
+			Version="8000.731.1532.0" />
+	</Dependencies>
+	<UpdateSettings>
+		<OnLaunch
+			HoursBetweenUpdateChecks="0" />
+	</UpdateSettings>
+</AppInstaller>
