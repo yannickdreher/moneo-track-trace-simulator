@@ -33,22 +33,6 @@ jobs:
       
     - name: Publish Application
       run: dotnet publish App/App.csproj -c Release -p:PublishProfile=win-x64 -p:ReleaseVersion=${{ steps.version.outputs.version }}
-      
-    - name: Calculate SHA256 Hash
-      shell: pwsh
-      run: |
-        $version = "${{ steps.version.outputs.version }}"
-        $exePath = "App\bin\Publish\moneo-tts_win-x64_$version.exe"
-        $hashPath = "App\bin\Publish\moneo-tts_win-x64_$version.hash"
-        
-        if (Test-Path $exePath) {
-          $hash = (Get-FileHash -Path $exePath -Algorithm SHA256).Hash
-          $hash | Out-File -FilePath $hashPath -NoNewline -Encoding ASCII
-          Write-Host "Hash created: $hash"
-        } else {
-          Write-Error "Published executable not found at $exePath"
-          exit 1
-        }
     
     - name: Upload Release Assets
       shell: pwsh
@@ -57,9 +41,5 @@ jobs:
       run: |
         $version = "${{ steps.version.outputs.version }}"
         $exePath = "App\bin\Publish\moneo-tts_win-x64_$version.exe"
-        $hashPath = "App\bin\Publish\moneo-tts_win-x64_$version.hash"
         
-        gh release upload "${{ github.event.release.tag_name }}" `
-          "$exePath" `
-          "$hashPath" `
-          --clobber
+        gh release upload "${{ github.event.release.tag_name }}" "$exePath" --clobber
