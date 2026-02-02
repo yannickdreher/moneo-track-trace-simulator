@@ -6,17 +6,20 @@ using System.Threading;
 using System.Threading.Tasks;
 using App.Models;
 using App.Services;
+using App.Settings;
 
 namespace App.ViewModels
 {
     public partial class StationViewModel(
         StationModel model,
         StationService stationService,
-        LogService logService) : INotifyPropertyChanged
+        LogService logService,
+        SettingsService<MqttSettings> settingsService) : INotifyPropertyChanged
     {
         private readonly StationService _stationService = stationService;
         private readonly LogService _logger = logService;
         private readonly StationModel _model = model;
+        private readonly SettingsService<MqttSettings> _settingsService = settingsService;
         private Timer? _telemetryTimer;
         private bool _isTelemetryRunning;
 
@@ -27,19 +30,19 @@ namespace App.ViewModels
         public ObservableCollection<TelemetryDataPoint> TelemetryDataPoints { get; } = [];
         public ObservableCollection<AttributeDataPoint> Attributes { get; } = [];
 
-        // Properties
         public string Name => _model.Name;
-        public string BaseTopic => _model.BaseTopic;
+        
+        public string BaseTopic => $"{_settingsService.Value.Topic}/{_model.TopicSuffix}";
 
-        private int _telemetryIntervalSeconds = model.TelemetryIntervalSeconds;
         public int TelemetryIntervalSeconds
         {
-            get => _telemetryIntervalSeconds;
+            get => _model.TelemetryIntervalSeconds;
             set
             {
-                if (SetProperty(ref _telemetryIntervalSeconds, value))
+                if (_model.TelemetryIntervalSeconds != value)
                 {
                     _model.TelemetryIntervalSeconds = value;
+                    OnPropertyChanged();
                 }
             }
         }

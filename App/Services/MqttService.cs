@@ -16,7 +16,6 @@ namespace App.Services
         private readonly MqttClientFactory _mqttFactory = new();
         private readonly SemaphoreSlim _lock = new(1, 1);
         private readonly CancellationTokenSource _cts = new();
-        private MqttSettings _settings;
 
         public event Action<ConnectionStatus>? StatusChanged;
         public ConnectionStatus CurrentStatus { get; private set; } = ConnectionStatus.Disconnected;
@@ -25,7 +24,6 @@ namespace App.Services
         {
             _settingsService = settingsService;
             _logger = logService;
-            _settings = _settingsService.Value;
 
             _client = _mqttFactory.CreateMqttClient();
 
@@ -45,7 +43,6 @@ namespace App.Services
             try
             {
                 await DisconnectAsync();
-                _settings = options;
                 await ConnectAsync();
             }
             catch
@@ -57,19 +54,19 @@ namespace App.Services
         private async Task OnDisconnectedAsync(MqttClientDisconnectedEventArgs e)
         {
             UpdateStatus(ConnectionStatus.Disconnected);
-            _logger.LogInfo($"[MQTT] Disconnected from {_settings.Host}:{_settings.Port}");
+            _logger.LogInfo($"[MQTT] Disconnected from {_settingsService.Value.Host}:{_settingsService.Value.Port}");
         }
 
         private async Task OnConnectingAsync(MqttClientConnectingEventArgs e)
         {
             UpdateStatus(ConnectionStatus.Connecting);
-            _logger.LogInfo($"[MQTT] Connecting to {_settings.Host}:{_settings.Port}");
+            _logger.LogInfo($"[MQTT] Connecting to {_settingsService.Value.Host}:{_settingsService.Value.Port}");
         }
 
         private async Task OnConnectedAsync(MqttClientConnectedEventArgs e)
         {
             UpdateStatus(ConnectionStatus.Connected);
-            _logger.LogInfo($"[MQTT] Connected to {_settings.Host}:{_settings.Port}");
+            _logger.LogInfo($"[MQTT] Connected to {_settingsService.Value.Host}:{_settingsService.Value.Port}");
         }
 
         private void UpdateStatus(ConnectionStatus status)
@@ -100,22 +97,24 @@ namespace App.Services
 
                 UpdateStatus(ConnectionStatus.Connecting);
 
+                var settings = _settingsService.Value;
+
                 var clientOptions = new MqttClientOptionsBuilder()
-                    .WithTcpServer(_settings.Host, _settings.Port)
+                    .WithTcpServer(settings.Host, settings.Port)
                     .WithCleanSession()
-                    .WithKeepAlivePeriod(TimeSpan.FromSeconds(_settings.KeepAlivePeriodSeconds))
-                    .WithTimeout(TimeSpan.FromSeconds(_settings.TimeoutSeconds));
+                    .WithKeepAlivePeriod(TimeSpan.FromSeconds(settings.KeepAlivePeriodSeconds))
+                    .WithTimeout(TimeSpan.FromSeconds(settings.TimeoutSeconds));
 
                 var tlsOptions = new MqttClientTlsOptionsBuilder()
-                    .UseTls(_settings.UseTls)
+                    .UseTls(settings.UseTls)
                     .WithAllowUntrustedCertificates(true)
                     .Build();
 
                 clientOptions.WithTlsOptions(tlsOptions);
 
-                if (!string.IsNullOrEmpty(_settings.Username))
+                if (!string.IsNullOrEmpty(settings.Username))
                 {
-                    clientOptions.WithCredentials(_settings.Username, _settings.Password);
+                    clientOptions.WithCredentials(settings.Username, settings.Password);
                 }
 
                 var options = clientOptions.Build();
@@ -183,17 +182,6 @@ namespace App.Services
         public void Dispose()
         {
             _cts.Cancel();
-
-            // TODO: Not sure if we need to do this here
-            //try
-            //{
-            //    DisconnectAsync(CancellationToken.None).GetAwaiter().GetResult();
-            //}
-            //catch (Exception ex)
-            //{
-            //    _logger.AddLog($"[MQTT] Error during disposal disconnect: {ex.Message}");
-            //}
-
             _lock.Dispose();
             _client.Dispose();
             _cts.Dispose();

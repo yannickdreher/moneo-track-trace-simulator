@@ -18,11 +18,11 @@ namespace App.Services
             var model = new StationModel
             {
                 Name = name,
-                BaseTopic = $"{_settingsService.Value.Topic}/{topicSuffix}",
+                TopicSuffix = topicSuffix,
                 TelemetryIntervalSeconds = 1
             };
 
-            var viewModel = new StationViewModel(model, _stationService, _logger);
+            var viewModel = new StationViewModel(model, _stationService, _logger, _settingsService);
             viewModel.InitializeDefaultCarriers();
 
             return viewModel;
