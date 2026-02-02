@@ -1,1 +1,149 @@
-<html lang="en"><head>    <meta charset="utf-8" />    <meta http-equiv="X-UA-Compatible" content="IE=edge">    <title>        moneo | track and trace simulator    </title>    <style>body{    padding:5%;    display:flex;    font-family: Segoe UI;    line-height: normal;    color:#333333;    font-size:15px;}.t{    border:1px solid red;}.left-col{    flex: 0 0 200px;}.right-col{    flex: 1 1 30px;    max-width:650px;}img{    width:200px;    height:200px;    border: 1px solid #D2D2D2;}.additional-links-title{    margin-top:50px;    margin-bottom:20px;}.lg{    font-size:20px;}.xl{    font-size:34px;}button{    background-color:#0078D4;    color:#FFFFFF;    text-align:center;    width:150px;    height:40px;    border:none;    outline:none;    cursor: pointer;}a{    color: #0067B8;    text-decoration:none;    cursor: pointer;}.dark-blue{    color: #0078D4}.mb-24{    margin-bottom:24px;}.mr-28{    margin-right:28px;}.mb-12{    margin-bottom:12px;}.mb-28{    margin-bottom:28;}.key{    font-weight: bold;    margin-right:24px;    }.value{    flex: 0 0 }.info-row{    display:flex;}.info-row > div{    flex: 0 0 250px;}.mr-24{    margin-right:24px;}.alinks > a{    margin-bottom:15px;    display:block;}@font-face {    font-family: 'FabricMDL2Icons';    src: url('data:application/octet-stream;base64,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') format('truetype');  }    .ms-Icon {    -moz-osx-font-smoothing: grayscale;    -webkit-font-smoothing: antialiased;    font-family: 'FabricMDL2Icons';    font-style: normal;    font-weight: normal;    speak: none;  }    .ms-Icon--ChevronDown:before{ content: "\E70D"; }  .ms-Icon--ChevronUp:before{ content: "\E70E"; }  .ms-Icon--ChevronRight:before { content: "\E76C"; }  .alinks{    max-height:0px;    transition: max-height .2s ease-out;    overflow:hidden;  }  input#achk:checked + .alinks{    height:auto;    max-height:400px;    transition: max-height .5s ease-in !important;  }  .sm{      font-size:10px;  }  label{      cursor: pointer;  }  .dlbuttons > a{   margin-right: 5px;  }  .app-image{        background-color:transparent;  }</style></head><body class="body">    <div class="left-col mr-28">        <img alt='application image' class='app-image' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAASfmlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iWE1QIENvcmUgNC40LjAiPgogICA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPgogICAgICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgICAgICAgICB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIKICAgICAgICAgICAgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiPgogICAgICAgICA8eG1wTU06RGVyaXZlZEZyb20gcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICA8c3RSZWY6ZG9jdW1lbnRJRD5hZG9iZTpkb2NpZDpwaG90b3Nob3A6NTMxMGIyMGYtZDcyOS02ZDRiLWE1N2QtOWI4ZmVjOTMyMTk5PC9zdFJlZjpkb2N1bWVudElEPgogICAgICAgICA8L3htcE1NOkRlcml2ZWRGcm9tPgogICAgICA8L3JkZjpEZXNjcmlwdGlvbj4KICAgPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCjw/eHBhY2tldCBlbmQ9InciPz5n2gSKAAAGS0lEQVRogeWae0wUVxTGf7PLKqKgri8e0kioDwQFhZpgQIvViKbBxFpFLAlNjFpDTKNVY9X6qmmVmLbGNmqs0pAoGiUpMbrGB0GwpkqNPEzVSrGCQKsiAqLsunv7x4q7sw92Z1mh0i+ZP+bMPed+39y5r3NHEkLQE6DqbgLeQo8R4uO1SEaDxN3L46kqSqC2NIZHlaNoqg3CZAwAQKVuIiC4jkHhtwmOvk5YYjEj4stQa7zybUud7iN3LsRRkpPOjfy5tDYMV+Trp60hMiWPuPQc3p5W0hkangspz0vizKat1FUkdIbAKwRGFZO85QvGzS3wxF25kMZqLceX7uH306mA5EmlHUAQMSuXefsyGRDaoMRRmZAb+VPIzThM6+MQpQwVwW/gfVKz04hMueiui/tCzm1fgm7jHoTQADA4HBJXwKBw1+2ifwo/LXCX00tmkoHkbZlMX7/fneLujVon16ymIGsH7ZRD4+CTAnj+BKqvgMno3DcwCvyHuVWNDEJoOL1hL8+f9Of9nVmuirsWcm77EpkIgOQt8Pgu7I6HtpaO/Wd/CZOXu6zGCSQKsnbg2/+Jq5bpeEK8kT8F3cY9gPTguURD20t70DgoP+FahHcgodu4hxv5Uzoq5LxFGqu15GYcvlSn1qz5tQ+3GtUAxAwykjW/igkv9PY+MfNhaITcFpaonLothNCQm3GYVaXjnY1mzjv7gdmHiwrOLpx/th9DfE18GK5Hb5Q4WtkLvcafM59OYnR1nqV8UBR8Vg5PH4DhmTxWWxPsHNd5QRGzjrD4VJr7Qsrzksj+4PyMk/5SZbOKX+Y0EehnLlfVrCLx5wCSQ/UcmNpq8QmbDJmX4LtJcO9q50k7hiDjxHuOJk3HfUS3aatRIJU2qJkRYnglAiDM30T8MAPXHnpvmaYAErpNWx09sBdy50Ic9RUJKgl6qwUNbfaTxBO9RB+fbtrH1FckcOdCnK3ZXkhJTjqYx9qZww0U1mrQVVvefm6lhmsPfZg53OC4omEREBItv4KivKRCztEa8j5iNEhsDrzXvoqtbZWYo/OnqlnF2AFG2kwSlU0qxmuN5Cc3009jFal/MKy9Cb397St+9hg2aL0nxE9bw+b6t6y3AHIhlRej+WHqdWufJgN8X+FLUb0PPhK8G2xg2dg2/Bx1kb5a8A+U2xJXQPR87woBWF4YQ/iU0vZbOZ2qIrsleYAG1k14zjp3gj9tMF8y20OPeLpEVVGCcyG1pTGy+5QsGD/PPsizRshJhX9uWWwaX8jIM/cRa/QZAO2tvvQMDBmlnLS+FY4vgz+LnHKVC3lUKa+l72Do1Q+uHLTYJBUkZMK4uXD+K4s9JAbGzILrR+HxX3Ii7RPkTR3cv44ySBC/FGIXyYXYcJULaaoNsovT/DecXCu3xS4CyWZYll4OgIW7nE+Ihd+4x90WEbOx2yvYcJUPv+2JgjcBNly9Nz07mx+HjoYFB8G3P+hb4NhiqKuwPFepIfUQhEw0B7nyIxR+q7h6eYuo1E2KI7TD2S5xYhqEvgM1JeaVcexH8ufDxkBsOrTUmzdoU1e5V58NV7mQgOA6d3nbwVmLqNTmljiSAY33LH3p1fOXH8X5r6H0mLm8O7DhKo86KPy2e1EcwNv5FFew4SoXEhytdGy0oKvXkDZc5ULCEos9DtzVLWLDVS5kRHwZftoajwJ3tkWUvAg/bQ0j4susTXIhao0gMiWP7oCSFxGZkmeb/Lbfj8Sm53hEpCs/rTh7jvZCRk4rITBKeV/pqs4eGFXsMHMvhLC/yk4kiZWYxNVDQtRVCLESIfQtlstkEuJFm9xmeCaEEEIYWuX2F3ohWhvMMerKzfcyv1az397pQpz63Bzb+rm+RQiTUYjL+4RYiUmUnUhyxLnDdBCwEP8g8+o3abXnb/FFGxTthkkfm1fUjlB6DAKCnOfBaktBpVaYDgJzgm5XdNlrz7y7C7+B9ztK0DlPmQ4IbSA1Ow1JcpJl6EJIkoHU7LSOzkw6zv1GplwkeVsmXT9vW0OQvC3T1VmJ61Pd6ev3k7R6Ld0jRpC0eq07ZySeH/S8big86PkfHr21o0cchlqjPC8J3aat1HvpeDooqpiZXXk8bYs/LsTxWyd/GIhNz2Fkd/0wYIs3/heO/wh6zN9BPUbIv/Yy7UE3abqoAAAAAElFTkSuQmCC'>        <div class="lg additional-links-title">            <label for="achk">                    Additional Links                    <i class="ms-Icon--ChevronDown ms-Icon sm"></i>            </label>        </div>        <input type="checkbox" id="achk" style="display:none;">        <div class="alinks">            <a href='https://yannickdreher.github.io/moneo-track-trace-simulator/packages/App_1.0.0.0_Test/App_1.0.0.0_x64_arm64.cer'>Publisher Certificate</a><a href='https://yannickdreher.github.io/moneo-track-trace-simulator/packages/App.appinstaller'>App Installer File</a><a href='https://yannickdreher.github.io/moneo-track-trace-simulator/packages/App_1.0.0.0_Test/App_1.0.0.0_x64_arm64.msixbundle'>Package Bundle</a>        </div>    </div>    <div class="right-col">        <div class="app-title xl  mb-24 dark-blue">            moneo | track and trace simulator        </div>        <div class="app-version lg mb-24">            Version            1.0.0.0        </div>        <div class="app-description mb-24">            moneo | track and trace simulator        </div>        <div class="mb-12 dlbuttons">            <a href='ms-appinstaller:?source=https://yannickdreher.github.io/moneo-track-trace-simulator/packages/App.appinstaller'><button>Get the app <i class='ms-Icon ms-Icon--ChevronRight sm'></i></button></a>        </div>        <div class="mb-24">            <a href="https://go.microsoft.com/fwlink/?linkid=870616">                Troubleshoot installation            </a>        </div>        <div class="mb-28 lg">            Application Information        </div>        <div class="info-table">            <div class="info-row">                <div class="key">                    Version                </div>                <div class="value">                    1.0.0.0                </div>            </div>            <br/>            <div class="info-row">                <div class="key">                    Required Operating System                </div>                <div class="value">                    10.0.17763.0                </div>            </div>            <br/>            <div class="info-row">                <div class="key">                    Architectures                </div>                <div class="value">                    x64|ARM64                </div>            </div>            <br/>            <div class="info-row">                <div class="key">                    Publisher                </div>                <div class="value">                    ifm software gmbh                </div>            </div>        </div>    </div></body></html>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>moneo | track and trace simulator - Downloads</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #2d2d2d;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+        }
+
+        h1 {
+            color: #4da6ff;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #b0b0b0;
+            font-size: 16px;
+            margin-bottom: 40px;
+        }
+
+        .download-section {
+            margin-top: 30px;
+        }
+
+        .download-section h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #e0e0e0;
+        }
+
+        .download-link {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            background-color: #3a3a3a;
+            border: 1px solid #4a4a4a;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #4da6ff;
+            transition: all 0.2s;
+        }
+
+        .download-link:hover {
+            background-color: #0078D4;
+            color: white;
+            border-color: #0078D4;
+        }
+
+        .download-icon {
+            margin-right: 15px;
+            font-size: 24px;
+        }
+
+        .download-info {
+            flex: 1;
+        }
+
+        .download-name {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .download-details {
+            font-size: 13px;
+            color: #b0b0b0;
+            margin-top: 4px;
+        }
+
+        .download-link:hover .download-details {
+            color: rgba(255,255,255,0.9);
+        }
+
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #4a4a4a;
+            font-size: 13px;
+            color: #b0b0b0;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .footer a {
+            color: #4da6ff;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer a:hover {
+            color: #66b3ff;
+            text-decoration: underline;
+        }
+
+        .footer .trademark {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>moneo | track and trace simulator</h1>
+        <p class="subtitle">Download der aktuellen Version</p>
+
+        <div class="download-section">
+            <h2>Verfügbare Downloads</h2>
+            
+            <a href="downloads/moneo-tts_win-x64_1.0.0.exe" class="download-link" download>
+                <span class="download-icon">📦</span>
+                <div class="download-info">
+                    <div class="download-name">moneo-tts_win-x64_1.0.0.exe</div>
+                    <div class="download-details">Windows 64-bit • Version 1.0.0</div>
+                </div>
+            </a>
+        </div>
+
+        <div class="footer">
+            <p>© Yannick Dreher | <a href="https://github.com/yannickdreher/moneo-track-trace-simulator">GitHub Repository</a></p>
+            <p class="trademark">
+                moneo® ist eine eingetragene Marke der <a href="https://www.ifm.com" target="_blank">ifm electronic gmbh</a>, Friedrichstraße 1, 45128 Essen, Deutschland
+            </p>
+        </div>
+    </div>
+</body>
+</html>
