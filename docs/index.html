@@ -38,6 +38,23 @@
             text-align: center;
         }
 
+        .loading {
+            text-align: center;
+            color: #b0b0b0;
+            padding: 40px;
+            font-size: 16px;
+        }
+
+        .error {
+            text-align: center;
+            color: #ff6b6b;
+            padding: 40px;
+            font-size: 16px;
+            background-color: #2d2d2d;
+            border: 1px solid #4a4a4a;
+            border-radius: 8px;
+        }
+
         .downloads-grid {
             display: grid;
             gap: 20px;
@@ -51,6 +68,11 @@
             padding: 24px;
             box-shadow: 0 4px 16px rgba(0,0,0,0.4);
             transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .download-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(77, 166, 255, 0.2);
         }
 
         .card-header {
@@ -83,12 +105,18 @@
             gap: 15px;
             font-size: 13px;
             color: #b0b0b0;
+            flex-wrap: wrap;
         }
 
         .meta-item {
             display: flex;
             align-items: center;
             gap: 5px;
+        }
+
+        .release-date {
+            font-size: 12px;
+            color: #888;
         }
 
         .download-button {
@@ -105,6 +133,7 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            white-space: nowrap;
         }
 
         .download-button:hover {
@@ -240,64 +269,8 @@
         <h1>moneo | track and trace simulator</h1>
         <p class="subtitle">Download the latest version</p>
 
-        <div class="downloads-grid">
-            <!-- Download Card 1 -->
-            <div class="download-card" data-file="moneo-tts_win-x64_1.0.0.exe" data-version="1.0.0" data-platform="Windows 64-bit">
-                <div class="card-header">
-                    <span class="file-icon">📦</span>
-                    <div class="file-info">
-                        <div class="file-name">moneo-tts_win-x64_1.0.0.exe</div>
-                        <div class="file-meta">
-                            <span class="meta-item">💻 Windows 64-bit</span>
-                            <span class="meta-item">📌 Version 1.0.0</span>
-                        </div>
-                    </div>
-                    <a href="downloads/moneo-tts_win-x64_1.0.0.exe" class="download-button" download>
-                        Download
-                    </a>
-                </div>
-
-                <div class="security-section">
-                    <div class="security-title">🔒 Security Information</div>
-                    <div class="hash-row">
-                        <span class="hash-label">SHA256:</span>
-                        <div class="hash-value loading" data-hash-target title="Click to copy">Loading...</div>
-                    </div>
-                    <div class="verify-info">
-                        Verify: <code>certutil -hashfile moneo-tts_win-x64_1.0.0.exe SHA256</code>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Weitere Downloads können einfach hinzugefügt werden -->
-            <!-- 
-            <div class="download-card" data-file="moneo-tts_win-x64_1.0.1.exe" data-version="1.0.1" data-platform="Windows 64-bit">
-                <div class="card-header">
-                    <span class="file-icon">📦</span>
-                    <div class="file-info">
-                        <div class="file-name">moneo-tts_win-x64_1.0.1.exe</div>
-                        <div class="file-meta">
-                            <span class="meta-item">💻 Windows 64-bit</span>
-                            <span class="meta-item">📌 Version 1.0.1</span>
-                        </div>
-                    </div>
-                    <a href="downloads/moneo-tts_win-x64_1.0.1.exe" class="download-button" download>
-                        ⬇️ Download
-                    </a>
-                </div>
-
-                <div class="security-section">
-                    <div class="security-title">🔒 Security Information</div>
-                    <div class="hash-row">
-                        <span class="hash-label">SHA256:</span>
-                        <div class="hash-value loading" data-hash-target title="Click to copy">Loading...</div>
-                    </div>
-                    <div class="verify-info">
-                        Verify: <code>certutil -hashfile moneo-tts_win-x64_1.0.1.exe SHA256</code>
-                    </div>
-                </div>
-            </div>
-            -->
+        <div id="downloadsContainer" class="downloads-grid">
+            <div class="loading">⏳ Loading releases...</div>
         </div>
 
         <div class="footer">
@@ -313,35 +286,118 @@
     </div>
 
     <script>
-        // Lädt Hashes beim Laden der Seite
+        const REPO_OWNER = 'yannickdreher';
+        const REPO_NAME = 'moneo-track-trace-simulator';
+        const API_URL = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/releases`;
+
         document.addEventListener('DOMContentLoaded', function() {
-            loadAllHashes();
+            loadReleases();
         });
 
-        async function loadAllHashes() {
-            const cards = document.querySelectorAll('.download-card');
+        async function loadReleases() {
+            const container = document.getElementById('downloadsContainer');
             
-            for (const card of cards) {
-                const fileName = card.getAttribute('data-file');
-                const hashElement = card.querySelector('[data-hash-target]');
+            try {
+                const response = await fetch(API_URL);
                 
-                if (fileName && hashElement) {
-                    await loadHash(fileName, hashElement);
+                if (!response.ok) {
+                    throw new Error(`GitHub API error: ${response.status}`);
                 }
+                
+                const releases = await response.json();
+                
+                if (releases.length === 0) {
+                    container.innerHTML = '<div class="error">📦 No releases available yet</div>';
+                    return;
+                }
+                
+                // Releases sind bereits nach Datum sortiert (neueste zuerst)
+                container.innerHTML = '';
+                
+                for (const release of releases) {
+                    const card = createDownloadCard(release);
+                    if (card) {
+                        container.appendChild(card);
+                    }
+                }
+                
+            } catch (error) {
+                console.error('Failed to load releases:', error);
+                container.innerHTML = `<div class="error">❌ Failed to load releases: ${error.message}</div>`;
             }
         }
 
-        async function loadHash(fileName, hashElement) {
-            // Extrahiere den Basisnamen ohne .exe Endung
-            const baseName = fileName.replace('.exe', '');
-            const hashFile = `downloads/${baseName}.hash`;
+        function createDownloadCard(release) {
+            const version = release.tag_name.replace(/^v/, '');
+            const exeAsset = release.assets.find(asset => asset.name.endsWith('.exe'));
+            const hashAsset = release.assets.find(asset => asset.name.endsWith('.hash'));
             
+            if (!exeAsset) {
+                console.warn(`No .exe asset found for release ${release.tag_name}`);
+                return null;
+            }
+            
+            const card = document.createElement('div');
+            card.className = 'download-card';
+            
+            const releaseDate = new Date(release.published_at).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            const sizeInMB = (exeAsset.size / 1024 / 1024).toFixed(2);
+            
+            card.innerHTML = `
+                <div class="card-header">
+                    <span class="file-icon">📦</span>
+                    <div class="file-info">
+                        <div class="file-name">${exeAsset.name}</div>
+                        <div class="file-meta">
+                            <span class="meta-item">💻 Windows 64-bit</span>
+                            <span class="meta-item">📌 Version ${version}</span>
+                            <span class="meta-item">📏 ${sizeInMB} MB</span>
+                        </div>
+                        <div class="release-date">Released: ${releaseDate}</div>
+                    </div>
+                    <a href="${exeAsset.browser_download_url}" class="download-button" download>
+                        ⬇️ Download
+                    </a>
+                </div>
+
+                <div class="security-section">
+                    <div class="security-title">🔒 Security Information</div>
+                    <div class="hash-row">
+                        <span class="hash-label">SHA256:</span>
+                        <div class="hash-value loading" data-hash-url="${hashAsset?.browser_download_url || ''}" title="Click to copy">
+                            ${hashAsset ? 'Loading...' : 'Not available'}
+                        </div>
+                    </div>
+                    <div class="verify-info">
+                        Verify: <code>certutil -hashfile ${exeAsset.name} SHA256</code>
+                    </div>
+                </div>
+            `;
+            
+            // Hash laden, falls vorhanden
+            if (hashAsset) {
+                const hashElement = card.querySelector('[data-hash-url]');
+                loadHash(hashAsset.browser_download_url, hashElement);
+            } else {
+                const hashElement = card.querySelector('[data-hash-url]');
+                hashElement.classList.remove('loading');
+                hashElement.classList.add('error');
+            }
+            
+            return card;
+        }
+
+        async function loadHash(url, hashElement) {
             try {
-                const response = await fetch(hashFile);
+                const response = await fetch(url);
                 
                 if (response.ok) {
                     const hashValue = await response.text();
-                    // Entferne Whitespace und Zeilenumbrüche
                     const cleanHash = hashValue.trim();
                     
                     hashElement.textContent = cleanHash;
@@ -351,7 +407,7 @@
                     throw new Error('Hash file not found');
                 }
             } catch (error) {
-                console.error(`Failed to load hash for ${fileName}:`, error);
+                console.error(`Failed to load hash from ${url}:`, error);
                 hashElement.textContent = 'Hash not available';
                 hashElement.classList.remove('loading');
                 hashElement.classList.add('error');

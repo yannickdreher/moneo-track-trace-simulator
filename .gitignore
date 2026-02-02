@@ -145,12 +145,6 @@ DocProject/Help/html
 # Click-Once directory
 publish/
 
-# Publish Web Output
-*.[Pp]ublish.xml
-*.azurePubxml
-*.pubxml
-*.publishproj
-
 # Microsoft Azure Web App publish settings
 PublishScripts/
 

@@ -1,0 +1,62 @@
+name: Build and Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build-and-release:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.0.x'
+        
+    - name: Extract version from tag
+      id: version
+      shell: pwsh
+      run: |
+        $version = "${{ github.event.release.tag_name }}".TrimStart('v')
+        echo "version=$version" >> $env:GITHUB_OUTPUT
+        echo "Version: $version"
+        
+    - name: Restore dependencies
+      run: dotnet restore App/App.csproj
+      
+    - name: Publish Application
+      run: dotnet publish App/App.csproj -c Release -p:PublishProfile=win-x64 -p:ReleaseVersion=${{ steps.version.outputs.version }}
+      
+    - name: Calculate SHA256 Hash
+      shell: pwsh
+      run: |
+        $version = "${{ steps.version.outputs.version }}"
+        $exePath = "publish\moneo-tts_win-x64_$version.exe"
+        $hashPath = "publish\moneo-tts_win-x64_$version.hash"
+        
+        if (Test-Path $exePath) {
+          $hash = (Get-FileHash -Path $exePath -Algorithm SHA256).Hash
+          $hash | Out-File -FilePath $hashPath -NoNewline -Encoding ASCII
+          Write-Host "Hash created: $hash"
+        } else {
+          Write-Error "Published executable not found at $exePath"
+          exit 1
+        }
+    
+    - name: Upload Release Assets
+      shell: pwsh
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        $version = "${{ steps.version.outputs.version }}"
+        $exePath = "publish\moneo-tts_win-x64_$version.exe"
+        $hashPath = "publish\moneo-tts_win-x64_$version.hash"
+        
+        gh release upload "${{ github.event.release.tag_name }}" `
+          "$exePath" `
+          "$hashPath" `
+          --clobber
