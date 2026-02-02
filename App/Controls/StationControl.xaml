@@ -84,13 +84,14 @@
 						</Grid>
 
 						<ListView x:Name="CarriersListView"
-					      MinHeight="100"
-					      MaxHeight="180"
-					      SelectionMode="None"
-					      BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-					      BorderThickness="1"
-					      CornerRadius="8"
-					      ItemsSource="{x:Bind ViewModel.Carriers, Mode=OneWay}">
+								  MinHeight="100"
+								  MaxHeight="180"
+								  Padding="0,6"
+								  SelectionMode="None"
+								  BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+								  BorderThickness="1"
+								  CornerRadius="8"
+								  ItemsSource="{x:Bind ViewModel.Carriers, Mode=OneWay}">
 							<ListView.ItemTemplate>
 								<DataTemplate x:DataType="models:CarrierItem">
 									<Grid ColumnSpacing="6">
@@ -101,20 +102,20 @@
 										</Grid.ColumnDefinitions>
 
 										<CheckBox IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
-									      Grid.Column="0"
-									      VerticalAlignment="Center"/>
+												  Grid.Column="0"
+												  VerticalAlignment="Center"/>
 
 										<TextBox Text="{x:Bind Name, Mode=TwoWay}"
-									     Grid.Column="1"
-									     VerticalAlignment="Center"/>
+												 Grid.Column="1"
+												 VerticalAlignment="Center"/>
 
 										<Button Click="RemoveCarrier_Click"
-									    Tag="{x:Bind Name}"
-									    Width="32"
-									    Height="32"
-									    Padding="4"
-									    Grid.Column="2"
-									    ToolTipService.ToolTip="Remove carrier">
+												Tag="{x:Bind Name}"
+												Width="32"
+												Height="32"
+												Padding="4"
+												Grid.Column="2"
+												ToolTipService.ToolTip="Remove carrier">
 											<FontIcon Glyph="&#xE74D;" Foreground="#C42B1C" FontSize="12"/>
 										</Button>
 									</Grid>
@@ -163,7 +164,7 @@
 					    Padding="12"
 					    Background="{ThemeResource LayerFillColorDefaultBrush}">
 					<StackPanel Spacing="8">
-						<TextBlock Text="Telemetry Configuration" FontWeight="SemiBold"/>
+						<TextBlock Text="Telemetry" FontWeight="SemiBold"/>
 
 						<ContentPresenter x:Name="TelemetryContent" Content="{x:Bind TelemetrySection, Mode=OneWay}"/>
 

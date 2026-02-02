@@ -30,7 +30,7 @@
 				<ColumnDefinition Width="*"/>
 			</Grid.ColumnDefinitions>
 
-			<Image Source="/Assets/ifm.svg" 
+			<Image Source="/Assets/logo.svg" 
                    Width="24" Height="24" 
                    Margin="4"
                    VerticalAlignment="Center"/>
@@ -56,7 +56,7 @@
 				</Border.Background>
 				
 				<StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="16">
-					<Image Source="/Assets/ifm.svg"
+					<Image Source="/Assets/logo.svg"
                            Width="64" Height="64"
                            VerticalAlignment="Center"/>
 
@@ -122,6 +122,7 @@
 				Padding="4"
 				Margin="4"
 				Background="Black"
+				Opacity="0.9"
 				CornerRadius="8"
 				BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
 				BorderThickness="1">
@@ -134,7 +135,7 @@
 							FontSize="10"/>
 
 					<ListView x:Name="LogListView"
-							  Height="100"
+							  Height="80"
 							  SelectionMode="None"
 							  IsItemClickEnabled="False"
 							  ScrollViewer.VerticalScrollBarVisibility="Auto"

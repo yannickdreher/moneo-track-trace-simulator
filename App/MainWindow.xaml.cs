@@ -39,6 +39,7 @@ namespace App
             
             ExtendsContentIntoTitleBar = true;
             SetTitleBar(AppTitleBar);
+            SetWindowIcon();
             
             SetWindowSize(900, 1000);
             SetVersion();
@@ -50,6 +51,15 @@ namespace App
             MainNavigationView.SelectedItem = MainNavigationView.MenuItems[0];
 
             _ = ConnectToBrokerAsync();
+        }
+
+        private void SetWindowIcon()
+        {
+            var iconPath = System.IO.Path.Combine(AppContext.BaseDirectory, "Assets", "logo.ico");
+            if (System.IO.File.Exists(iconPath))
+            {
+                AppWindow.SetIcon(iconPath);
+            }
         }
 
         private void SetWindowSize(int width, int height)
