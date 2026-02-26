@@ -4,6 +4,19 @@
     <Platform Name="ARM64" />
     <Platform Name="x64" />
   </Configurations>
+  <Folder Name="/docs/">
+    <File Path="docs/index.html" />
+  </Folder>
+  <Folder Name="/docs/images/">
+    <File Path="docs/images/1_moneo_device-management_mqtt-broker-onboarding.png" />
+    <File Path="docs/images/2_moneo_device-management_mqtt-topics-onboarding.png" />
+    <File Path="docs/images/3_moneo_track-trace_layout.png" />
+    <File Path="docs/images/4_moneo_track-trace_stations-input-output-mapping.png" />
+    <File Path="docs/images/5_moneo_track-trace_station-availability-data-mapping.png" />
+    <File Path="docs/images/background.svg" />
+    <File Path="docs/images/logo.ico" />
+    <File Path="docs/images/logo.svg" />
+  </Folder>
   <Project Path="App/App.csproj">
     <Platform Solution="*|ARM64" Project="ARM64" />
     <Platform Solution="*|x64" Project="x64" />
