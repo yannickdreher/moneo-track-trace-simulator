@@ -10,7 +10,12 @@ permissions:
 jobs:
   build-and-release:
     runs-on: windows-latest
-    
+
+    env:
+      APP_ID: moneo-tts
+      PUBLISH_DIR: publish
+      PACKAGE_DIR: artifacts
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -27,19 +32,27 @@ jobs:
         $version = "${{ github.event.release.tag_name }}".TrimStart('v')
         echo "version=$version" >> $env:GITHUB_OUTPUT
         echo "Version: $version"
+
+    - name: Cache NuGet packages
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~\.nuget\packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', '**/nuget.config') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget
         
-    - name: Restore dependencies
-      run: dotnet restore App/App.csproj
+    - name: Restore Dependencies
+      run: dotnet restore App/App.csproj -r win-x64
       
     - name: Publish Application
-      run: dotnet publish App/App.csproj -c Release -p:PublishProfile=win-x64 -p:ReleaseVersion=${{ steps.version.outputs.version }}
-    
-    - name: Upload Release Assets
-      shell: pwsh
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        $version = "${{ steps.version.outputs.version }}"
-        $exePath = "App\bin\Publish\moneo-tts_win-x64_$version.exe"
-        
-        gh release upload "${{ github.event.release.tag_name }}" "$exePath" --clobber
+      run: dotnet publish App/App.csproj -c Release -r win-x64 -p:SelfContained=false -p:PublishSingleFile=false -o $env:PUBLISH_DIR
+
+    - name: Install Velopack
+      run: dotnet tool install --global Velopack
+
+    - name: Pack Velopack Release
+      run: vpk pack -u $env:APP_ID -v ${{ steps.version.outputs.version }} -p $env:PUBLISH_DIR -o $env:PACKAGE_DIR
+
+    - name: Upload Velopack Assets to GitHub Release
+      run: vpk upload github -r ${{ github.repository }} -t ${{ secrets.GITHUB_TOKEN }} -o $env:PACKAGE_DIR --release-tag ${{ github.event.release.tag_name }}
