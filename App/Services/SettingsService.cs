@@ -22,7 +22,13 @@ namespace App.Services
 
         public SettingsService(string fileName = "settings.json")
         {
-            _filePath = Path.Combine(AppContext.BaseDirectory, fileName);
+            var appDataPath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                "moneo-tts");
+
+            Directory.CreateDirectory(appDataPath);
+
+            _filePath = Path.Combine(appDataPath, fileName);
             _value = new T();
             _jsonOptions = new JsonSerializerOptions
             {
