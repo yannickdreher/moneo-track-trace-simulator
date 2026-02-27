@@ -59,4 +59,4 @@ jobs:
       run: vpk pack -u $env:APP_ID -v ${{ steps.version.outputs.version }} -p $env:PUBLISH_DIR -o $env:PACKAGE_DIR
 
     - name: Upload Velopack Assets to GitHub Release
-      run: vpk upload github --repoUrl https://github.com/${{ github.repository }} --publish --token ${{ secrets.GITHUB_TOKEN }} --tag ${{ github.event.release.tag_name }} -o $env:PACKAGE_DIR
+      run: vpk upload github --repoUrl https://github.com/${{ github.repository }} --token ${{ secrets.GITHUB_TOKEN }} --tag ${{ github.event.release.tag_name }} -o $env:PACKAGE_DIR
