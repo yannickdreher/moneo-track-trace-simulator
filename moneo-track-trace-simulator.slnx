@@ -17,6 +17,15 @@
     <File Path="docs/images/logo.ico" />
     <File Path="docs/images/logo.svg" />
   </Folder>
+  <Folder Name="/misc/">
+    <File Path=".editorconfig" />
+    <File Path=".gitattributes" />
+    <File Path=".gitignore" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/workflows/">
+    <File Path=".github/workflows/release.yml" />
+  </Folder>
   <Project Path="App/App.csproj">
     <Platform Solution="*|ARM64" Project="ARM64" />
     <Platform Solution="*|x64" Project="x64" />
