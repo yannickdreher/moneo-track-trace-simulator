@@ -46,14 +46,14 @@ jobs:
       run: dotnet restore App/App.csproj -r win-x64
       
     - name: Publish Application
-      run: dotnet publish App/App.csproj -c Release -r win-x64 --self-contained --no-restore -p:WindowsAppSDKSelfContained=true -p:Version=${{ steps.version.outputs.version }} -o $env:PUBLISH_DIR
+      run: dotnet publish App/App.csproj -c Release -r win-x64 --self-contained --no-restore -p:Version=${{ steps.version.outputs.version }} -o $env:PUBLISH_DIR
 
     - name: Install Velopack
       run: dotnet tool install -g vpk
 
-    - name: Download latest release
-      continue-on-error: true
-      run: vpk download github --repoUrl https://github.com/${{ github.repository }} --token ${{ secrets.GITHUB_TOKEN }} -o $env:PACKAGE_DIR
+    # - name: Download latest release
+    #   continue-on-error: true
+    #   run: vpk download github --repoUrl https://github.com/${{ github.repository }} --token ${{ secrets.GITHUB_TOKEN }} -o $env:PACKAGE_DIR
 
     - name: Pack Velopack Release
       run: vpk pack -u $env:APP_ID -v ${{ steps.version.outputs.version }} -p $env:PUBLISH_DIR -o $env:PACKAGE_DIR
