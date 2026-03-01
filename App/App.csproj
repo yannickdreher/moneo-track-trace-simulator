@@ -11,7 +11,7 @@
 		<ApplicationIcon>Assets\logo.ico</ApplicationIcon>
 		<UseWinUI>true</UseWinUI>
 		<WinUISDKReferences>false</WinUISDKReferences>
-		<EnableMsixTooling>false</EnableMsixTooling>
+		<EnableMsixTooling>true</EnableMsixTooling>
 		<WindowsPackageType>None</WindowsPackageType>
 		<Nullable>enable</Nullable>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -21,7 +21,7 @@
 	<PropertyGroup Condition="'$(Configuration)'=='Release'">
 		<DebugType>none</DebugType>
 		<DebugSymbols>false</DebugSymbols>
-		<SelfContained>true</SelfContained>
+		<SelfContained>false</SelfContained>
 		<WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
 	</PropertyGroup>
 
